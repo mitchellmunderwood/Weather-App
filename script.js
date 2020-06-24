@@ -4,6 +4,8 @@ $(document).ready(function () {
     var cityInput = $("#city_input");
     var searchArray = ["Raleigh"];
     var weatherResults = {};
+    var box = $("#box")
+    var header = $("#city_name")
 
     cityInput.keydown(function (event) {
         if (event.key === 'Enter') {
@@ -42,7 +44,7 @@ $(document).ready(function () {
         }).then(function (response) {
             // console.log("full response", response);
             weatherLog(response);
-            weatherRender();
+            weatherRender(searchText);
         });
     }
 
@@ -76,28 +78,65 @@ $(document).ready(function () {
         return "" + (month + 1) + "/" + day + "/" + year;
     }
 
-    function weatherRender() {
-        // get the header to update
-        // organize the container to clear
+    function weatherRender(name) {
+        header.text(name);
 
+        box.empty();
 
-        var box = $("#box")
+        headerRender()
+
         for (i = 0; i <= 5; i++) {
             var current = weatherResults[i];
             var row = makeRow();
             var date = makeColumn(current.date);
-            var UV = makeColumn("NA")
+            if (i === 0) {
+                var UV = makeUV(5);
+            } else {
+                var UV = makeColumn("NA")
+            }
             var sky = makeColumn(current.sky);
             var temp = makeColumn(current.temp);
             var humidity = makeColumn(current.humidity);
             var wind = makeColumn(current.wind);
-            row.append(date, UV, sky, temp, humidity, wind);
+            row.append(date, sky, UV, temp, humidity, wind);
             box.append(row);
         }
     }
 
+    function headerRender() {
+        var row = makeHeader();
+        var date = makeColumn("Date");
+        var UV = makeColumn("UV")
+        var sky = makeColumn("Sky");
+        var temp = makeColumn("Temp ºF");
+        var humidity = makeColumn("Hum %");
+        var wind = makeColumn("Wind MPH");
+        row.append(date, sky, UV, temp, humidity, wind);
+        box.append(row);
+    }
+
+    function makeUV(num) {
+        var p = $("<p>").text(num);
+        var background;
+        if (num <= 3) {
+            background = "green";
+        } else if (num > 3 && num <= 6) {
+            background = "yellow";
+        } else if (num > 6 && num <= 8) {
+            background = "orange";
+        } else {
+            background = "red";
+        }
+        p.attr("style", "border-radius:5px;background:" + background + ";")
+        return $("<div>").addClass("col-2").append(p);
+    }
+
     function makeRow() {
         return $("<div>").attr("id", "day").addClass("row day border-top")
+    }
+
+    function makeHeader() {
+        return $("<div>").attr("id", "day_header").addClass("row day")
     }
 
     function makeColumn(words) {
@@ -106,5 +145,6 @@ $(document).ready(function () {
     }
 
     renderList();
+    headerRender();
 
 });
