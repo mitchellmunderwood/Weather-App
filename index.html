@@ -23,9 +23,24 @@
             background: white;
         }
 
+        .forecast_header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgb(24, 115, 235);
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .forecast_header p {
+            margin: 0px;
+        }
+
         .forecast_day {
             padding: 5px;
             display: flex;
+            /* justify-content: space-around; */
             width: 100%;
             border-bottom: 1px solid grey;
         }
@@ -41,6 +56,15 @@
         #city_name {
             text-align: center;
             margin-bottom: 15px;
+        }
+
+        .f_date {
+            width: 100px;
+        }
+
+        .f_slot {
+            width: 20%;
+            max-width: 100px;
         }
     </style>
 </head>
@@ -66,10 +90,21 @@
             <div id="main" class="col-sm-12 col-md-9">
                 <h2 id="city_name">Raleigh</h1>
                     <div class="results_list">
-                        <div class="forecast_day">
-                            <p id="temp">75*F</p>
-                            <p id="humidity">76hum</p>
-                            <p id="UV">5</p>
+                        <div class="forecast_header">
+                            <p>Date</p>
+                            <p>Sky</p>
+                            <p>Temp</p>
+                            <p>Humidity</p>
+                            <p>Wind Speed</p>
+                            <p>UV Index</p>
+                        </div>
+                        <div id="1" class="forecast_day">
+                            <p class="f_date">7/15/20</p>
+                            <p class="f_slot">sunny</p>
+                            <p class="f_slot">75*C</p>
+                            <p class="f_slot">45</p>
+                            <p class="f_slot">15</p>
+                            <p class="f_slot">5</p>
                         </div>
                         <div class="forecast_day no_border_bottom">
                             <p id="temp">75*F</p>
