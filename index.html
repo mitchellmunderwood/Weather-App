@@ -4,19 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 
     <style>
         .results_list {
-            padding: 15px;
+
             display: flex;
             flex-direction: column;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid grey;
+            border-radius: 5px;
+            background: white;
         }
 
         .forecast_day {
+            padding: 5px;
             display: flex;
+            width: 100%;
+            border-bottom: 1px solid grey;
+        }
+
+        .no_border_bottom {
+            border-bottom: none;
+        }
+
+        #no_border_bottom {
+            border-bottom: none;
+        }
+
+        #city_name {
+            text-align: center;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -29,23 +53,30 @@
         <div class="row">
             <div id="sidebar" class="col-sm-12 col-md-3">
                 <div class="search_bar">
-                    <input type="text"><button type="submit">Sub</button>
+                    <input type="text" placeholder="  Search by City Name"><button type="submit"><i class="fa fa-search"
+                            aria-hidden="true"></i></button>
                 </div>
 
                 <div class="search_list">
-                    <p class="search_item">Item 1</p>
-                    <p class="search_item">Item 2</p>
-                    <p class="search_item">Item 3</p>
+                    <p class="search_item">Raleigh</p>
+                    <p class="search_item">Charlotte</p>
+                    <p id="no_border_bottom" class="search_item">San Diego</p>
                 </div>
             </div>
             <div id="main" class="col-sm-12 col-md-9">
-                <div class="results_list">
-                    <div class="forecast_day">
-                        <p id="temp">75*F</p>
-                        <p id="humidity">76hum</p>
-                        <p id="UV">5</p>
+                <h2 id="city_name">Raleigh</h1>
+                    <div class="results_list">
+                        <div class="forecast_day">
+                            <p id="temp">75*F</p>
+                            <p id="humidity">76hum</p>
+                            <p id="UV">5</p>
+                        </div>
+                        <div class="forecast_day no_border_bottom">
+                            <p id="temp">75*F</p>
+                            <p id="humidity">76hum</p>
+                            <p id="UV">5</p>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
