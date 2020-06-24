@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>Document</title>
 
     <style>
@@ -31,6 +32,31 @@
             padding-top: 30px;
             font-family: Arial, Helvetica, sans-serif;
         }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: yellow;
+            margin: auto;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        #sidebar {
+            height: 100%;
+            background: blue;
+            padding: 0;
+        }
+
+        #main {
+            height: 100%;
+            background: red;
+            padding: 0;
+        }
     </style>
 </head>
 
@@ -38,12 +64,12 @@
     <header>
         <h1>Weather Forecast</h1>
     </header>
-    <aside>
-
-    </aside>
-    <main>
-
-    </main>
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-sm-12 col-md-3"></div>
+            <div id="main" class="col-sm-12 col-md-9"></div>
+        </div>
+    </div>
 
 
 </body>
