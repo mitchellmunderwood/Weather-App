@@ -40,9 +40,9 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log("full response", response);
+            // console.log("full response", response);
             weatherLog(response);
-            // weatherRender();
+            weatherRender();
         });
     }
 
@@ -50,18 +50,20 @@ $(document).ready(function () {
         var indices = [0, 8, 16, 24, 32, 39]
 
         for (i = 0; i < indices.length; i++) {
-            var today = moment();
+
             var conditions = {};
-            // console.log(response.list[0])
-            // console.log(indices.length);
             conditions.sky = response.list[indices[i]].weather[0].description;
             var tempC = response.list[indices[i]].main.temp;
             conditions.temp = Math.round(((tempC - 273.15) * 9 / 5) + 32);
             conditions.humidity = response.list[indices[i]].main.humidity;
             conditions.wind = response.list[indices[i]].wind.speed;
 
+            var today = moment();
             var date = datePlusDay(today, i);
-            weatherResults[date] = conditions;
+
+            conditions.date = date;
+
+            weatherResults[i] = conditions;
         }
         console.log("logged info", weatherResults);
     }
@@ -72,6 +74,35 @@ $(document).ready(function () {
         var day = new_date.date();
         var year = new_date.year();
         return "" + (month + 1) + "/" + day + "/" + year;
+    }
+
+    function weatherRender() {
+        // get the header to update
+        // organize the container to clear
+
+
+        var box = $("#box")
+        for (i = 0; i <= 5; i++) {
+            var current = weatherResults[i];
+            var row = makeRow();
+            var date = makeColumn(current.date);
+            var UV = makeColumn("NA")
+            var sky = makeColumn(current.sky);
+            var temp = makeColumn(current.temp);
+            var humidity = makeColumn(current.humidity);
+            var wind = makeColumn(current.wind);
+            row.append(date, UV, sky, temp, humidity, wind);
+            box.append(row);
+        }
+    }
+
+    function makeRow() {
+        return $("<div>").attr("id", "day").addClass("row day border-top")
+    }
+
+    function makeColumn(words) {
+        var p = $("<p>").text(words);
+        return $("<div>").addClass("col-2").append(p);
     }
 
     renderList();
