@@ -105,3 +105,67 @@ h1 {
     font-weight: bold;
 }
 
+.results_list {
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background: white;
+}
+
+.forecast_header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgb(24, 115, 235);
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.forecast_header p {
+    margin: 0px;
+}
+
+.forecast_day {
+    padding: 5px;
+    display: flex;
+    /* justify-content: space-around; */
+    width: 100%;
+    border-bottom: 1px solid grey;
+}
+
+.no_border_bottom {
+    border-bottom: none;
+}
+
+#no_border_bottom {
+    border-bottom: none;
+}
+
+#city_name {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#day_header {
+    background: rgb(24, 115, 235);
+    color: white;
+    font-weight: bold;
+
+}
+
+.day {
+    background: white;
+    padding: 5px;
+}
+
+.day p {
+    margin: 0;
+    text-align: center;
+}
