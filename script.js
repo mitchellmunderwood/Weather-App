@@ -13,6 +13,7 @@ $(document).ready(function () {
             searchArray.push(searchText);
             renderList();
             weatherPull(searchText);
+
         }
     });
 
@@ -22,6 +23,7 @@ $(document).ready(function () {
         searchArray.push(searchText);
         renderList();
         weatherPull(searchText);
+
     });
 
     function renderList() {
@@ -39,14 +41,17 @@ $(document).ready(function () {
         var APIKey = "166a433c57516f51dfab1f7edaed8413";
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" + "q=" + searchText + "&appid=" + APIKey;
         $.ajax({
+            async: false,
             url: queryURL,
             method: "GET"
         }).then(function (response) {
             // console.log("full response", response);
             weatherLog(response);
-            weatherRender(searchText);
+
         });
     }
+
+
 
     function weatherLog(response) {
         var indices = [0, 8, 16, 24, 32, 39]
@@ -64,10 +69,29 @@ $(document).ready(function () {
             var date = datePlusDay(today, i);
 
             conditions.date = date;
-
             weatherResults[i] = conditions;
         }
         console.log("logged info", weatherResults);
+        UVLog(response);
+
+    }
+
+
+
+    function UVLog(response) {
+        var lon = response.city.coord.lon;
+        var lat = response.city.coord.lat;
+        var APIKey = "166a433c57516f51dfab1f7edaed8413";
+        var queryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
+        $.ajax({
+            async: false,
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            weatherResults[0].UVIndex = response.value;
+            weatherRender(cityInput.val());
+        });
+
     }
 
     function datePlusDay(date, index) {
@@ -80,9 +104,7 @@ $(document).ready(function () {
 
     function weatherRender(name) {
         header.text(name);
-
         box.empty();
-
         headerRender()
 
         for (i = 0; i <= 5; i++) {
@@ -90,7 +112,7 @@ $(document).ready(function () {
             var row = makeRow();
             var date = makeColumn(current.date);
             if (i === 0) {
-                var UV = makeUV(5);
+                var UV = makeUV(current.UVIndex);
             } else {
                 var UV = makeColumn("NA")
             }
