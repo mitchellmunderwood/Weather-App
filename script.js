@@ -1,17 +1,23 @@
 $(document).ready(function () {
+
+    // object handlers
     var searchList = $(".search_list");
     var submitBtn = $("#submit_btn");
     var cityInput = $("#city_input");
-
-    var weatherResults = {};
     var box = $("#box")
     var header = $("#city_name")
+
+    // data storage and localstorage
+    var weatherResults = {};
 
     let searchArray = ["Raleigh"];
     if (localStorage.getItem("searchArray")) {
         searchArray = JSON.parse(localStorage.getItem("searchArray"));
     }
 
+    // event handlers
+
+    // search for city
     cityInput.keydown(function (event) {
         if (event.key === 'Enter') {
             var searchText = cityInput.val();
@@ -24,6 +30,7 @@ $(document).ready(function () {
         }
     });
 
+    // search for city
     submitBtn.on("click", function (event) {
         event.preventDefault();
         var searchText = cityInput.val();
@@ -35,6 +42,7 @@ $(document).ready(function () {
 
     });
 
+    // search for city already listed
     $(".search_list").on("click", function (event) {
         event.preventDefault();
         var searchText = event.target.innerHTML;
@@ -44,6 +52,7 @@ $(document).ready(function () {
         weatherPull(searchText);
     })
 
+    // clear searches
     $("#clear_btn").on("click", function (event) {
         event.preventDefault();
         searchArray = ["Raleigh"];
@@ -53,6 +62,9 @@ $(document).ready(function () {
 
     })
 
+    // supporting function
+
+    // search list rendering
     function renderList() {
         searchList.empty();
         for (i = 0; i < searchArray.length; i++) {
@@ -65,9 +77,7 @@ $(document).ready(function () {
 
     }
 
-
-
-
+    // weather api data pull later call to log data function
     function weatherPull(searchText) {
         var APIKey = "166a433c57516f51dfab1f7edaed8413";
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?" + "q=" + searchText + "&appid=" + APIKey;
@@ -78,12 +88,11 @@ $(document).ready(function () {
         }).then(function (response) {
             // console.log("full response", response);
             weatherLog(response, searchText);
-
         });
     }
 
 
-
+    // weather data log and subsequent call to UV data log
     function weatherLog(response, city) {
         var indices = [0, 8, 16, 24, 32, 39]
 
@@ -108,8 +117,7 @@ $(document).ready(function () {
 
     }
 
-
-
+    // UV data log and subsequent call to data render function
     function UVLog(response, city) {
         var lon = response.city.coord.lon;
         var lat = response.city.coord.lat;
@@ -126,6 +134,7 @@ $(document).ready(function () {
 
     }
 
+    // data manipulation function
     function datePlusDay(date, index) {
         var new_date = date.add(index, 'day');
         var month = new_date.month();
@@ -134,6 +143,7 @@ $(document).ready(function () {
         return "" + (month + 1) + "/" + day + "/" + year;
     }
 
+    // weather table render function
     function weatherRender(name) {
         header.text(name);
         box.empty();
@@ -160,6 +170,7 @@ $(document).ready(function () {
         }
     }
 
+    // table header rendering
     function headerRender() {
         var row = makeHeader();
         var date = makeColumn("Date");
@@ -172,6 +183,7 @@ $(document).ready(function () {
         box.append(row);
     }
 
+    // supporting HTML object functions
     function makeUV(num) {
         var span = $("<span>").text(num);
         var background;
@@ -206,12 +218,9 @@ $(document).ready(function () {
         return $("<div>").addClass("col-2").append(img);
     }
 
-
+    // initiating functions
 
     renderList();
-    headerRender();
-    // weatherPull(searchArray[-1]);
     weatherPull(searchArray[searchArray.length - 1]);
-    // weather pull that gives that last searched item
 
 });

@@ -7,40 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-
-    <style>
-        #clear_btn {
-            background: rgb(252, 212, 139);
-            margin-bottom: 10px;
-            width: 100%;
-            border: 1px solid grey;
-            border-radius: 5px;
-        }
-
-        #clear_btn:hover {
-            background: orange;
-        }
-    </style>
+    <title>Weather App</title>
 </head>
 
 <body>
+    <!-- header with title -->
     <header>
         <h1>Weather Forecast</h1>
     </header>
+
+    <!-- container for search bar and results -->
     <div class="container">
         <div class="row">
+            <!-- search bar listed here -->
             <div id="sidebar" class="col-sm-12 col-md-3">
+
                 <div class="search_bar">
                     <input id="city_input" type="text" placeholder="  Search by City"><button id="submit_btn"><i
                             class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
 
                 <button id="clear_btn">Clear Searches</button>
+
                 <div class="search_list">
 
                 </div>
             </div>
+
+            <!-- results listed here -->
             <div id="main" class="col-sm-12 col-md-9">
                 <h2 id="city_name">Raleigh</h1>
                     <div class="results_list">
@@ -49,8 +43,11 @@
                         </div>
                     </div>
             </div>
+
         </div>
     </div>
+
+    <!-- script imports -->
     <script type="text/JavaScript" src=" https://MomentJS.com/downloads/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='script.js'></script>
