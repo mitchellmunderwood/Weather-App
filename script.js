@@ -44,6 +44,15 @@ $(document).ready(function () {
         weatherPull(searchText);
     })
 
+    $("#clear_btn").on("click", function (event) {
+        event.preventDefault();
+        searchArray = ["Raleigh"];
+        localStorage.setItem("searchArray", JSON.stringify(searchArray))
+        renderList();
+        weatherPull(searchArray[0]);
+
+    })
+
     function renderList() {
         searchList.empty();
         for (i = 0; i < searchArray.length; i++) {
@@ -53,7 +62,9 @@ $(document).ready(function () {
             }
             searchList.prepend(new_par);
         }
+
     }
+
 
 
 
