@@ -59,7 +59,8 @@ $(document).ready(function () {
         for (i = 0; i < indices.length; i++) {
 
             var conditions = {};
-            conditions.sky = response.list[indices[i]].weather[0].description;
+            conditions.sky = response.list[indices[i]].weather[0].main;
+            conditions.icon = response.list[indices[i]].weather[0].icon;
             var tempC = response.list[indices[i]].main.temp;
             conditions.temp = Math.round(((tempC - 273.15) * 9 / 5) + 32);
             conditions.humidity = response.list[indices[i]].main.humidity;
@@ -109,17 +110,20 @@ $(document).ready(function () {
 
         for (i = 0; i <= 5; i++) {
             var current = weatherResults[i];
+
             var row = makeRow();
+
             var date = makeColumn(current.date);
             if (i === 0) {
                 var UV = makeUV(current.UVIndex);
             } else {
                 var UV = makeColumn("NA")
             }
-            var sky = makeColumn(current.sky);
+            var sky = makeIcon(current.icon);
             var temp = makeColumn(current.temp);
             var humidity = makeColumn(current.humidity);
             var wind = makeColumn(current.wind);
+
             row.append(date, sky, UV, temp, humidity, wind);
             box.append(row);
         }
@@ -132,13 +136,13 @@ $(document).ready(function () {
         var sky = makeColumn("Sky");
         var temp = makeColumn("Temp ºF");
         var humidity = makeColumn("Hum %");
-        var wind = makeColumn("Wind MPH");
+        var wind = makeColumn("Wind");
         row.append(date, sky, UV, temp, humidity, wind);
         box.append(row);
     }
 
     function makeUV(num) {
-        var p = $("<p>").text(num);
+        var span = $("<span>").text(num);
         var background;
         if (num <= 3) {
             background = "green";
@@ -149,8 +153,8 @@ $(document).ready(function () {
         } else {
             background = "red";
         }
-        p.attr("style", "border-radius:5px;background:" + background + ";")
-        return $("<div>").addClass("col-2").append(p);
+        span.attr("style", "border-radius:5px;background:" + background + ";")
+        return $("<div>").addClass("col-2").append(span);
     }
 
     function makeRow() {
@@ -164,6 +168,11 @@ $(document).ready(function () {
     function makeColumn(words) {
         var p = $("<p>").text(words);
         return $("<div>").addClass("col-2").append(p);
+    }
+
+    function makeIcon(num) {
+        var img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + num + "@2x.png")
+        return $("<div>").addClass("col-2").append(img);
     }
 
     renderList();
