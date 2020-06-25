@@ -2,15 +2,22 @@ $(document).ready(function () {
     var searchList = $(".search_list");
     var submitBtn = $("#submit_btn");
     var cityInput = $("#city_input");
-    var searchArray = ["Raleigh"];
+
     var weatherResults = {};
     var box = $("#box")
     var header = $("#city_name")
 
+    let searchArray = ["Raleigh"];
+    if (localStorage.getItem("searchArray")) {
+        searchArray = JSON.parse(localStorage.getItem("searchArray"));
+    }
+
     cityInput.keydown(function (event) {
         if (event.key === 'Enter') {
             var searchText = cityInput.val();
+            cityInput.val("");
             searchArray.push(searchText);
+            localStorage.setItem("searchArray", JSON.stringify(searchArray));
             renderList();
             weatherPull(searchText);
 
@@ -20,11 +27,22 @@ $(document).ready(function () {
     submitBtn.on("click", function (event) {
         event.preventDefault();
         var searchText = cityInput.val();
+        cityInput.val("");
         searchArray.push(searchText);
+        localStorage.setItem("searchArray", JSON.stringify(searchArray));
         renderList();
         weatherPull(searchText);
 
     });
+
+    $(".search_list").on("click", function (event) {
+        event.preventDefault();
+        var searchText = event.target.innerHTML;
+        searchArray.push(searchText);
+        localStorage.setItem("searchArray", JSON.stringify(searchArray));
+        renderList();
+        weatherPull(searchText);
+    })
 
     function renderList() {
         searchList.empty();
@@ -36,6 +54,8 @@ $(document).ready(function () {
             searchList.prepend(new_par);
         }
     }
+
+
 
     function weatherPull(searchText) {
         var APIKey = "166a433c57516f51dfab1f7edaed8413";
@@ -175,13 +195,12 @@ $(document).ready(function () {
         return $("<div>").addClass("col-2").append(img);
     }
 
+
+
     renderList();
     headerRender();
-
-    $(".search_list").on("click", function (event) {
-        event.preventDefault();
-        var searchText = event.target.innerHTML;
-        weatherPull(searchText);
-    })
+    // weatherPull(searchArray[-1]);
+    weatherPull(searchArray[searchArray.length - 1]);
+    // weather pull that gives that last searched item
 
 });
