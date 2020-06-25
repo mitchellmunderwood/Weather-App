@@ -46,14 +46,14 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             // console.log("full response", response);
-            weatherLog(response);
+            weatherLog(response, searchText);
 
         });
     }
 
 
 
-    function weatherLog(response) {
+    function weatherLog(response, city) {
         var indices = [0, 8, 16, 24, 32, 39]
 
         for (i = 0; i < indices.length; i++) {
@@ -73,13 +73,13 @@ $(document).ready(function () {
             weatherResults[i] = conditions;
         }
         console.log("logged info", weatherResults);
-        UVLog(response);
+        UVLog(response, city);
 
     }
 
 
 
-    function UVLog(response) {
+    function UVLog(response, city) {
         var lon = response.city.coord.lon;
         var lat = response.city.coord.lat;
         var APIKey = "166a433c57516f51dfab1f7edaed8413";
@@ -90,7 +90,7 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             weatherResults[0].UVIndex = response.value;
-            weatherRender(cityInput.val());
+            weatherRender(city);
         });
 
     }
@@ -136,7 +136,7 @@ $(document).ready(function () {
         var sky = makeColumn("Sky");
         var temp = makeColumn("Temp ºF");
         var humidity = makeColumn("Hum %");
-        var wind = makeColumn("Wind");
+        var wind = makeColumn("Wind MPH");
         row.append(date, sky, UV, temp, humidity, wind);
         box.append(row);
     }
@@ -177,5 +177,11 @@ $(document).ready(function () {
 
     renderList();
     headerRender();
+
+    $(".search_list").on("click", function (event) {
+        event.preventDefault();
+        var searchText = event.target.innerHTML;
+        weatherPull(searchText);
+    })
 
 });
