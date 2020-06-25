@@ -19,8 +19,9 @@ $(document).ready(function () {
 
     // search for city
     cityInput.keydown(function (event) {
-        if (event.key === 'Enter') {
-            var searchText = cityInput.val();
+        var searchText = cityInput.val();
+        if (event.key === 'Enter' && searchText !== "") {
+
             cityInput.val("");
             searchArray.push(searchText);
             localStorage.setItem("searchArray", JSON.stringify(searchArray));
@@ -34,11 +35,15 @@ $(document).ready(function () {
     submitBtn.on("click", function (event) {
         event.preventDefault();
         var searchText = cityInput.val();
-        cityInput.val("");
-        searchArray.push(searchText);
-        localStorage.setItem("searchArray", JSON.stringify(searchArray));
-        renderList();
-        weatherPull(searchText);
+        if (searchText !== "") {
+
+            cityInput.val("");
+            searchArray.push(searchText);
+            localStorage.setItem("searchArray", JSON.stringify(searchArray));
+            renderList();
+            weatherPull(searchText);
+
+        }
 
     });
 
